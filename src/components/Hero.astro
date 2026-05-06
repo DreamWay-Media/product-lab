@@ -1,0 +1,50 @@
+---
+import { site } from '@/content/site';
+const [brandWord, ...brandRest] = site.name.split(' ');
+---
+
+<section id="hero" class="hero-section">
+  <div class="hero-backdrop" aria-hidden="true">
+    <div class="hero-backdrop-inner">
+      <div class="hero-orb hero-orb--a"></div>
+      <div class="hero-orb hero-orb--b"></div>
+      <div class="hero-noise"></div>
+      <div class="hero-grid-overlay"></div>
+    </div>
+  </div>
+
+  <div class="hero-grid">
+    <div class="hero-left" data-reveal-group>
+      <div class="hero-eyebrow reveal-item" style="--i:0">Physical Product Studio</div>
+      <h1 class="hero-h1 reveal-item" style="--i:1">
+        We Build<br />
+        <em>Real</em>
+        Products.
+      </h1>
+      <p class="hero-sub reveal-item" style="--i:2">
+        From concept to manufacturing — <strong>{brandWord} {brandRest.join(' ')}</strong> executes the full product development journey for founders and brands who are ready to build something tangible.
+      </p>
+      <div class="reveal-item" style="--i:3">
+        <a href="#cta" class="btn-primary">Book a Strategy Call →</a>
+      </div>
+    </div>
+    <div class="hero-right" data-parallax="0.055" data-parallax-max="14">
+      <div class="hero-stat">
+        <div class="hero-stat-num">6–10</div>
+        <div class="hero-stat-label">Week Sprint to Launch-Ready</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">20+</div>
+        <div class="hero-stat-label">Consumer Products Executed</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">End</div>
+        <div class="hero-stat-label">to-End Product Execution</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">0</div>
+        <div class="hero-stat-label">Fluff. Just Execution.</div>
+      </div>
+    </div>
+  </div>
+</section>
