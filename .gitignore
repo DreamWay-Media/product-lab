@@ -1,5 +1,4 @@
-node_modules/
-.astro/
+.DS_Store
 .env
 .env.*
-!.env.example
+.history/
