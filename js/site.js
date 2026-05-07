@@ -10,32 +10,89 @@
     'trail-chews': {
       title: 'Trail Chews',
       images: [
-        { src: null, caption: 'Trail Chews — Packaging Front' },
-        { src: null, caption: 'Trail Chews — Packaging Detail' },
-        { src: null, caption: 'Trail Chews — Product Shot' },
-        { src: null, caption: 'Trail Chews — Lifestyle' },
-        { src: null, caption: 'Trail Chews — Brand System' },
-        { src: null, caption: 'Trail Chews — Label Design' },
-        { src: null, caption: 'Trail Chews — Manufacturing' },
-        { src: null, caption: 'Trail Chews — Final Product' },
+        {
+          src: 'images/trail-chews/trail-chews-01.JPG',
+          caption: 'Trail Chews — Packaging Front',
+        },
+        {
+          src: 'images/trail-chews/trail-chews-02.JPG',
+          caption: 'Trail Chews — Packaging Detail',
+        },
+        {
+          src: 'images/trail-chews/trail-chews-03.JPG',
+          caption: 'Trail Chews — Product Shot',
+        },
+        /* Add trail-chews-04.jpg (export from HEIC) when ready — browsers don’t reliably show .HEIC */
+        {
+          src: 'images/trail-chews/trail-chews-01.JPG',
+          caption: 'Trail Chews — Lifestyle',
+        },
+        {
+          src: 'images/trail-chews/trail-chews-02.JPG',
+          caption: 'Trail Chews — Brand System',
+        },
+        {
+          src: 'images/trail-chews/trail-chews-03.JPG',
+          caption: 'Trail Chews — Label Design',
+        },
+        {
+          src: 'images/trail-chews/trail-chews-01.JPG',
+          caption: 'Trail Chews — Manufacturing',
+        },
+        {
+          src: 'images/trail-chews/trail-chews-02.JPG',
+          caption: 'Trail Chews — Final Product',
+        },
       ],
     },
     'food-bev': {
       title: 'Specialty Food Products',
       images: [
-        { src: null, caption: 'Olives — Packaging' },
-        { src: null, caption: 'Preserves — Label Design' },
-        { src: null, caption: 'Wafer Rolls — Product Shot' },
-        { src: null, caption: 'Canned Goods — Range' },
-        { src: null, caption: 'Beverage Mixes — Brand' },
+        {
+          src: 'images/food/Premium-bakery-Julienne-cups-packaging.jpg',
+          caption: 'Premium Bakery — Julienne cups packaging',
+        },
+        {
+          src: 'images/food/Indianos-tequila-gift-set-presentation.jpg',
+          caption: 'Indianos — Tequila gift set presentation',
+        },
+        {
+          src: 'images/food/belizimo-peppers.jpg',
+          caption: 'Belizimo — Peppers',
+        },
+        {
+          src: 'images/food/Golden-Harvest-organic-sunflower-oil.jpg',
+          caption: 'Golden Harvest — Organic sunflower oil',
+        },
+        {
+          src: 'images/food/Whole-green-olives-in-brine-jar.jpg',
+          caption: 'Whole green olives in brine — Jar',
+        },
+        {
+          src: 'images/food/Wafer-rolls-with-hazelnut-and-cocoa.jpg',
+          caption: 'Wafer rolls — Hazelnut and cocoa',
+        },
       ],
     },
     'clean-torch': {
       title: 'Clean Torch',
       images: [
-        { src: null, caption: 'Clean Torch — Product Shot' },
-        { src: null, caption: 'Clean Torch — Packaging' },
-        { src: null, caption: 'Clean Torch — Lifestyle' },
+        {
+          src: 'images/clean-torch/Clean-Torch-product-showcase-on-white.jpg',
+          caption: 'Clean Torch — Product showcase',
+        },
+        {
+          src: 'images/clean-torch/Clean-Torch-product-packaging-display.jpg',
+          caption: 'Clean Torch — Packaging display',
+        },
+        {
+          src: 'images/clean-torch/Clean-Torch-instruction-manual-mockup.jpg',
+          caption: 'Clean Torch — Insert design',
+        },
+        {
+          src: 'images/clean-torch/Clean-torch-product-presentation-grid.jpg',
+          caption: 'Clean Torch — Product presentation grid',
+        },
       ],
     },
   };
@@ -54,6 +111,91 @@
     return d.innerHTML;
   }
 
+  function applyMainImage(mainImg, item) {
+    if (!mainImg) return;
+
+    if (!item.src) {
+      mainImg.hidden = true;
+      mainImg.classList.remove('lb-fade-out');
+      mainImg.removeAttribute('src');
+      return;
+    }
+
+    mainImg.hidden = false;
+
+    var src = item.src;
+    var caption = item.caption;
+
+    function revealNew() {
+      var settled = false;
+      function settle() {
+        if (settled) return;
+        settled = true;
+        mainImg.removeEventListener('load', settle);
+        mainImg.removeEventListener('error', settle);
+        mainImg.classList.remove('lb-fade-out');
+      }
+
+      mainImg.alt = caption;
+      if (mainImg.getAttribute('src') === src) {
+        mainImg.classList.remove('lb-fade-out');
+        return;
+      }
+
+      mainImg.addEventListener('load', settle);
+      mainImg.addEventListener('error', settle);
+      mainImg.src = src;
+      if (mainImg.complete && mainImg.naturalWidth > 0) {
+        settle();
+      }
+    }
+
+    if (!mainImg.getAttribute('src')) {
+      mainImg.alt = caption;
+      mainImg.src = src;
+      mainImg.classList.remove('lb-fade-out');
+      return;
+    }
+
+    if (mainImg.getAttribute('src') === src) {
+      mainImg.alt = caption;
+      mainImg.classList.remove('lb-fade-out');
+      return;
+    }
+
+    var reduceMotion =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      mainImg.alt = caption;
+      mainImg.src = src;
+      mainImg.classList.remove('lb-fade-out');
+      return;
+    }
+
+    mainImg.classList.add('lb-fade-out');
+    var faded = false;
+    var fadeFallbackTimer = null;
+
+    function afterFade(e) {
+      if (e && e.propertyName !== 'opacity') return;
+      if (faded) return;
+      faded = true;
+      if (fadeFallbackTimer !== null) {
+        window.clearTimeout(fadeFallbackTimer);
+        fadeFallbackTimer = null;
+      }
+      mainImg.removeEventListener('transitionend', afterFade);
+      revealNew();
+    }
+
+    mainImg.addEventListener('transitionend', afterFade);
+    fadeFallbackTimer = window.setTimeout(function () {
+      fadeFallbackTimer = null;
+      afterFade({ propertyName: 'opacity' });
+    }, 360);
+  }
+
   function renderLightbox() {
     if (!currentGallery) return;
     var g = galleries[currentGallery];
@@ -64,9 +206,9 @@
     var captionEl = document.getElementById('lb-caption');
     var prevBtn = document.getElementById('lb-prev');
     var nextBtn = document.getElementById('lb-next');
-    var wrap = document.getElementById('lb-img-wrap');
+    var mainImg = document.getElementById('lb-main-img');
     var thumbs = document.getElementById('lb-thumbnails');
-    if (!titleEl || !counterEl || !captionEl || !prevBtn || !nextBtn || !wrap || !thumbs) return;
+    if (!titleEl || !counterEl || !captionEl || !prevBtn || !nextBtn || !mainImg || !thumbs) return;
 
     titleEl.textContent = g.title;
     counterEl.textContent = currentIndex + 1 + ' / ' + g.images.length;
@@ -74,19 +216,23 @@
     prevBtn.disabled = currentIndex === 0;
     nextBtn.disabled = currentIndex === g.images.length - 1;
 
-    if (img.src) {
-      wrap.innerHTML = '<img src="' + esc(img.src) + '" alt="' + esc(img.caption) + '" />';
-    } else {
-      wrap.innerHTML =
-        '<div class="lb-img-placeholder"><div class="icon">⊕</div><div class="lbl">' +
-        esc(img.caption) +
-        '</div></div>';
-    }
+    applyMainImage(mainImg, img);
 
     thumbs.innerHTML = g.images
       .map(function (im, i) {
         var active = i === currentIndex ? ' active' : '';
         if (im.src) {
+          if (i === currentIndex) {
+            return (
+              '<button type="button" class="lb-thumb' +
+              active +
+              '" data-lb-go="' +
+              i +
+              '" aria-current="true" aria-label="' +
+              esc(im.caption) +
+              '"><span class="lb-thumb-current" aria-hidden="true">✓</span></button>'
+            );
+          }
           return (
             '<button type="button" class="lb-thumb' +
             active +
@@ -96,9 +242,7 @@
             esc(im.caption) +
             '"><img src="' +
             esc(im.src) +
-            '" alt="' +
-            esc(im.caption) +
-            '" /></button>'
+            '" alt="" loading="lazy" decoding="async" /></button>'
           );
         }
         return (
@@ -114,17 +258,20 @@
         );
       })
       .join('');
-
-    thumbs.querySelectorAll('[data-lb-go]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var i = Number(btn.getAttribute('data-lb-go'));
-        if (!isNaN(i)) {
-          currentIndex = i;
-          renderLightbox();
-        }
-      });
-    });
   }
+
+  (function bindLbThumbClicks() {
+    var bar = document.getElementById('lb-thumbnails');
+    if (!bar) return;
+    bar.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-lb-go]');
+      if (!btn || !bar.contains(btn)) return;
+      var i = Number(btn.getAttribute('data-lb-go'));
+      if (isNaN(i) || !currentGallery) return;
+      currentIndex = i;
+      renderLightbox();
+    });
+  })();
 
   function openGallery(id) {
     if (!galleries[id]) return;
@@ -358,8 +505,13 @@
       if (window.matchMedia('(pointer: coarse)').matches) return;
 
       var rect = hero.getBoundingClientRect();
-      var x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-      var y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      var nx = (e.clientX - rect.left) / rect.width;
+      var ny = (e.clientY - rect.top) / rect.height;
+      hero.style.setProperty('--hero-x', Math.max(0, Math.min(100, nx * 100)) + '%');
+      hero.style.setProperty('--hero-y', Math.max(0, Math.min(100, ny * 100)) + '%');
+
+      var x = (nx - 0.5) * 2;
+      var y = (ny - 0.5) * 2;
       var max = 18;
       backdropInner.style.transform =
         'translate3d(' + Math.round(x * max) + 'px, ' + Math.round(y * max * 0.6) + 'px, 0)';
@@ -367,6 +519,8 @@
 
     function heroPointerLeave() {
       if (!backdropInner || reduce) return;
+      hero.style.setProperty('--hero-x', '58%');
+      hero.style.setProperty('--hero-y', '40%');
       backdropInner.style.transform = 'translate3d(0, 0, 0)';
     }
 
@@ -389,4 +543,19 @@
       hero.classList.add('motion-disabled');
     }
   })();
+
+  /* ── Calendly popup (official widget modal) ─────────────────────────────── */
+  var CALENDLY_BOOKING_URL =
+    'https://calendly.com/dreamwaymedia/1-and-1-with-vrej-to-discuss-the-project-details';
+
+  document.querySelectorAll('.js-calendly').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (window.Calendly && typeof Calendly.initPopupWidget === 'function') {
+        Calendly.initPopupWidget({ url: CALENDLY_BOOKING_URL });
+      } else {
+        window.location.href = CALENDLY_BOOKING_URL;
+      }
+    });
+  });
 })();
