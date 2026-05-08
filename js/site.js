@@ -486,11 +486,10 @@
 
   /* ── Primary navigation: mobile toggle + scroll-spy ─────────────────────── */
   (function primaryNav() {
-    var navEl = document.querySelector('.site-nav');
+    if (!document.querySelector('.site-nav')) return;
     var toggle = document.getElementById('nav-toggle');
     var menu = document.getElementById('primary-nav');
     var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link[data-nav-target]'));
-    if (!navEl) return;
 
     var mobileMq = window.matchMedia('(max-width: 880px)');
 
@@ -721,9 +720,15 @@
     }
   })();
 
-  /* ── Calendly popup (official widget modal) ─────────────────────────────── */
-  var CALENDLY_BOOKING_URL =
+  /* ── Calendly popup + campaign tracking (UTM + GA4) ─────────────────────── */
+  var CALENDLY_BOOKING_BASE =
     'https://calendly.com/dreamwaymedia/free-30-minute-fit-check-no-obligation-call';
+
+  var CAMPAIGN_DEFAULTS = {
+    utm_source: 'dreamway_product_lab_site',
+    utm_medium: 'organic',
+    utm_campaign: 'dwmpl_booking',
+  };
 
   function gaEvent(eventName, params) {
     try {
@@ -735,26 +740,79 @@
     }
   }
 
-  function calendlyPlacement(anchor) {
+  /** Nearest section slug for UTM content + GA (nav/footer/modals use fixed slugs). */
+  function calendlyCampaignSlug(anchor) {
     if (!anchor || typeof anchor.closest !== 'function') return 'other';
-    if (anchor.closest('#hero')) return 'hero';
-    if (anchor.closest('#offer')) return 'offer';
-    if (anchor.closest('#cta')) return 'cta';
     if (anchor.closest('.site-nav')) return 'nav';
+    if (anchor.closest('footer')) return 'footer';
+    var sec = anchor.closest('section[data-campaign]');
+    if (sec) {
+      var slug = sec.getAttribute('data-campaign');
+      if (slug) return slug;
+    }
     return 'other';
   }
 
+  function calendlyBookingUrl(campaignContent) {
+    var q = [];
+    q.push('utm_source=' + encodeURIComponent(CAMPAIGN_DEFAULTS.utm_source));
+    q.push('utm_medium=' + encodeURIComponent(CAMPAIGN_DEFAULTS.utm_medium));
+    q.push('utm_campaign=' + encodeURIComponent(CAMPAIGN_DEFAULTS.utm_campaign));
+    q.push('utm_content=' + encodeURIComponent(campaignContent || 'other'));
+    return CALENDLY_BOOKING_BASE + '?' + q.join('&');
+  }
+
   document.querySelectorAll('.js-calendly').forEach(function (el) {
+    var slug = calendlyCampaignSlug(el);
+    var bookingUrl = calendlyBookingUrl(slug);
+    el.setAttribute('href', bookingUrl);
+
     el.addEventListener('click', function (e) {
-      gaEvent('calendly_book_click', { cta_placement: calendlyPlacement(el) });
+      var s = calendlyCampaignSlug(el);
+      var url = calendlyBookingUrl(s);
+      gaEvent('calendly_book_click', {
+        cta_placement: s,
+        utm_source: CAMPAIGN_DEFAULTS.utm_source,
+        utm_medium: CAMPAIGN_DEFAULTS.utm_medium,
+        utm_campaign: CAMPAIGN_DEFAULTS.utm_campaign,
+        utm_content: s,
+      });
       e.preventDefault();
       if (window.Calendly && typeof Calendly.initPopupWidget === 'function') {
-        Calendly.initPopupWidget({ url: CALENDLY_BOOKING_URL });
+        Calendly.initPopupWidget({ url: url });
       } else {
-        window.location.href = CALENDLY_BOOKING_URL;
+        window.location.href = url;
       }
     });
   });
+
+  /* One-time GA4 section impressions (pairs with data-campaign on each section). */
+  if ('IntersectionObserver' in window) {
+    var sectionSeen = {};
+    var sectionIo = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var sec = entry.target;
+          var slug = sec.getAttribute('data-campaign');
+          if (!slug || sectionSeen[slug]) return;
+          sectionSeen[slug] = true;
+          sectionIo.unobserve(sec);
+          gaEvent('section_view', {
+            section_id: slug,
+            utm_source: CAMPAIGN_DEFAULTS.utm_source,
+            utm_medium: CAMPAIGN_DEFAULTS.utm_medium,
+            utm_campaign: CAMPAIGN_DEFAULTS.utm_campaign,
+            utm_content: slug,
+          });
+        });
+      },
+      { root: null, rootMargin: '0px 0px -12% 0px', threshold: 0.2 }
+    );
+    document.querySelectorAll('section[data-campaign]').forEach(function (sec) {
+      sectionIo.observe(sec);
+    });
+  }
 
   document.querySelectorAll('a.hero-secondary-cta').forEach(function (el) {
     el.addEventListener('click', function () {
