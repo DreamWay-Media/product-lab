@@ -106,6 +106,50 @@
     return d.innerHTML;
   }
 
+  /** Left swipe → next, right swipe → prev (touch; keeps vertical scroll when gesture is mostly vertical). */
+  function bindTouchSwipe(el, onPrev, onNext) {
+    if (!el || typeof el.addEventListener !== 'function') return;
+    var startX = 0;
+    var startY = 0;
+    var active = false;
+
+    el.addEventListener(
+      'touchstart',
+      function (e) {
+        if (e.touches.length !== 1) return;
+        active = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      },
+      { passive: true }
+    );
+
+    el.addEventListener(
+      'touchcancel',
+      function () {
+        active = false;
+      },
+      { passive: true }
+    );
+
+    el.addEventListener(
+      'touchend',
+      function (e) {
+        if (!active) return;
+        active = false;
+        var t = e.changedTouches[0];
+        if (!t) return;
+        var dx = t.clientX - startX;
+        var dy = t.clientY - startY;
+        var threshold = 45;
+        if (Math.abs(dx) < threshold || Math.abs(dx) < Math.abs(dy)) return;
+        if (dx > 0) onPrev();
+        else onNext();
+      },
+      { passive: true }
+    );
+  }
+
   function applyMainImage(mainImg, item) {
     if (!mainImg) return;
 
@@ -400,6 +444,17 @@
     });
   }
 
+  var lbImgWrapSwipe = document.getElementById('lb-img-wrap');
+  bindTouchSwipe(
+    lbImgWrapSwipe,
+    function () {
+      if (lightbox && lightbox.classList.contains('open')) navLightbox(-1);
+    },
+    function () {
+      if (lightbox && lightbox.classList.contains('open')) navLightbox(1);
+    }
+  );
+
   /* ── Testimonials carousel ─────────────────────────────────────────────── */
   (function carousel() {
     var track = document.getElementById('tc-track');
@@ -470,14 +525,21 @@
       render();
     }
 
-    prevBtnEl.addEventListener('click', function () {
+    function goPrev() {
       current = Math.max(0, current - 1);
       render();
-    });
-    nextBtnEl.addEventListener('click', function () {
+    }
+
+    function goNext() {
       current = Math.min(pages - 1, current + 1);
       render();
-    });
+    }
+
+    prevBtnEl.addEventListener('click', goPrev);
+    nextBtnEl.addEventListener('click', goNext);
+
+    var trackWrapEl = document.querySelector('#testimonials .carousel-track-wrap');
+    bindTouchSwipe(trackWrapEl, goPrev, goNext);
 
     buildDots();
     render();

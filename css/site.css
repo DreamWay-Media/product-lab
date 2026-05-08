@@ -491,14 +491,14 @@ section { position: relative; }
 
 @media (max-width: 640px) {
   .hero-metrics {
-    grid-template-columns: 1fr;
-    gap: 22px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 14px;
   }
 }
 
 /* ── POSITIONING (What we do) ── */
 #positioning {
-  padding: 120px 40px;
+  padding: 72px 40px 120px;
   background: var(--dark);
 }
 .positioning-inner {
@@ -588,7 +588,7 @@ section { position: relative; }
 }
 /* ── AUDIENCE ── */
 #audience {
-  padding: 120px 40px;
+  padding: 72px 40px 120px;
   background: var(--black);
 }
 .audience-inner { max-width: 1080px; margin: 0 auto; }
@@ -660,7 +660,7 @@ section { position: relative; }
 
 /* ── PROCESS ── */
 #process {
-  padding: 120px 40px;
+  padding: 72px 40px 120px;
   background: var(--mid);
 }
 .process-inner { max-width: 1080px; margin: 0 auto; }
@@ -728,7 +728,7 @@ section { position: relative; }
 
 /* ── CASE STUDIES ── */
 #work {
-  padding: 120px 40px;
+  padding: 72px 40px 120px;
   background: var(--black);
 }
 .work-inner { max-width: 1080px; margin: 0 auto; }
@@ -1111,7 +1111,7 @@ section { position: relative; }
 
 /* ── TESTIMONIALS CAROUSEL ── */
 #testimonials {
-  padding: 120px 40px;
+  padding: 72px 40px 120px;
   background: var(--mid);
   overflow: hidden;
 }
@@ -1350,7 +1350,7 @@ section { position: relative; }
 
 /* ── OFFER ── */
 #offer {
-  padding: 120px 40px;
+  padding: 72px 40px 120px;
   background: var(--lime);
 }
 .offer-inner {
@@ -1410,7 +1410,7 @@ section { position: relative; }
 
 /* ── FOUNDER ── */
 #founder {
-  padding: 120px 40px;
+  padding: 72px 40px 120px;
   background: var(--dark);
 }
 .founder-inner {
@@ -1486,7 +1486,7 @@ section { position: relative; }
 
 /* ── FINAL CTA ── */
 #cta {
-  padding: 140px 40px;
+  padding: 72px 40px 120px;
   background: var(--black);
   text-align: center;
   position: relative;
@@ -1862,6 +1862,7 @@ footer {
     white-space: normal;
   }
   .process-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .process-timeline { text-align: left; }
     .hero-metric-val { font-size: clamp(26px, 8vw, 36px); }
     .work-cat-stat { text-align: left; }
     .founder-left {
