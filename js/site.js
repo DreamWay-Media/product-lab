@@ -11,37 +11,32 @@
       title: 'Trail Chews',
       images: [
         {
+          src: 'images/trail-chews/slide-1-24-variety-pack.jpg',
+          caption: 'Trail Chews — 24-count variety pack',
+        },
+        {
+          src: 'images/trail-chews/slide-2-orange.jpg',
+          caption: 'Trail Chews — Orange flavor',
+        },
+        {
+          src: 'images/trail-chews/slide-3-strawberry.jpg',
+          caption: 'Trail Chews — Strawberry flavor',
+        },
+        {
+          src: 'images/trail-chews/trail-chews-strawberry.jpg',
+          caption: 'Trail Chews — Strawberry presentation',
+        },
+        {
           src: 'images/trail-chews/trail-chews-01.JPG',
-          caption: 'Trail Chews — Packaging Front',
+          caption: 'Trail Chews — Product photography (1)',
         },
         {
           src: 'images/trail-chews/trail-chews-02.JPG',
-          caption: 'Trail Chews — Packaging Detail',
+          caption: 'Trail Chews — Product photography (2)',
         },
         {
           src: 'images/trail-chews/trail-chews-03.JPG',
-          caption: 'Trail Chews — Product Shot',
-        },
-        /* Add trail-chews-04.jpg (export from HEIC) when ready — browsers don’t reliably show .HEIC */
-        {
-          src: 'images/trail-chews/trail-chews-01.JPG',
-          caption: 'Trail Chews — Lifestyle',
-        },
-        {
-          src: 'images/trail-chews/trail-chews-02.JPG',
-          caption: 'Trail Chews — Brand System',
-        },
-        {
-          src: 'images/trail-chews/trail-chews-03.JPG',
-          caption: 'Trail Chews — Label Design',
-        },
-        {
-          src: 'images/trail-chews/trail-chews-01.JPG',
-          caption: 'Trail Chews — Manufacturing',
-        },
-        {
-          src: 'images/trail-chews/trail-chews-02.JPG',
-          caption: 'Trail Chews — Final Product',
+          caption: 'Trail Chews — Product photography (3)',
         },
       ],
     },
@@ -273,6 +268,14 @@
     });
   })();
 
+  function syncBodyScrollLock() {
+    var lb = document.getElementById('lightbox');
+    var legal = document.getElementById('legal-modal');
+    var locked =
+      (lb && lb.classList.contains('open')) || (legal && legal.classList.contains('is-open'));
+    document.body.style.overflow = locked ? 'hidden' : '';
+  }
+
   function openGallery(id) {
     if (!galleries[id]) return;
     currentGallery = id;
@@ -280,7 +283,7 @@
     var lb = document.getElementById('lightbox');
     if (!lb) return;
     lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    syncBodyScrollLock();
     renderLightbox();
   }
 
@@ -288,7 +291,7 @@
     var lb = document.getElementById('lightbox');
     if (!lb) return;
     lb.classList.remove('open');
-    document.body.style.overflow = '';
+    syncBodyScrollLock();
   }
 
   function navLightbox(dir) {
@@ -313,7 +316,70 @@
   if (lbPrev) lbPrev.addEventListener('click', function () { navLightbox(-1); });
   if (lbNext) lbNext.addEventListener('click', function () { navLightbox(1); });
 
+  var legalModalLastTrigger = null;
+
+  function closeLegalModal() {
+    var modal = document.getElementById('legal-modal');
+    var bodyEl = document.getElementById('legal-modal-body');
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.hidden = true;
+    if (bodyEl) bodyEl.innerHTML = '';
+    syncBodyScrollLock();
+    if (legalModalLastTrigger && typeof legalModalLastTrigger.focus === 'function') {
+      legalModalLastTrigger.focus();
+    }
+    legalModalLastTrigger = null;
+  }
+
+  function openLegalModal(key, trigger) {
+    var modal = document.getElementById('legal-modal');
+    var titleEl = document.getElementById('legal-modal-title');
+    var bodyEl = document.getElementById('legal-modal-body');
+    if (!modal || !titleEl || !bodyEl) return;
+
+    var tplId = key === 'privacy' ? 'legal-content-privacy' : key === 'terms' ? 'legal-content-terms' : '';
+    if (!tplId) return;
+    var tpl = document.getElementById(tplId);
+    if (!tpl || !tpl.content) return;
+
+    var titleHtml =
+      key === 'privacy'
+        ? 'Privacy <span>Policy</span>'
+        : 'Terms <span>&amp; Conditions</span>';
+    titleEl.innerHTML = titleHtml;
+    bodyEl.innerHTML = '';
+    bodyEl.appendChild(document.importNode(tpl.content, true));
+
+    legalModalLastTrigger = trigger || null;
+    modal.hidden = false;
+    modal.classList.add('is-open');
+    syncBodyScrollLock();
+
+    var closeBtn = modal.querySelector('.legal-modal-close');
+    if (closeBtn) closeBtn.focus();
+  }
+
+  document.querySelectorAll('[data-legal-modal]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-legal-modal');
+      if (key) openLegalModal(key, btn);
+    });
+  });
+
+  var legalModalEl = document.getElementById('legal-modal');
+  if (legalModalEl) {
+    legalModalEl.addEventListener('click', function (e) {
+      if (e.target.closest('[data-legal-close]')) closeLegalModal();
+    });
+  }
+
   document.addEventListener('keydown', function (e) {
+    var legal = document.getElementById('legal-modal');
+    if (legal && legal.classList.contains('is-open')) {
+      if (e.key === 'Escape') closeLegalModal();
+      return;
+    }
     var lb = document.getElementById('lightbox');
     if (!lb || !lb.classList.contains('open')) return;
     if (e.key === 'Escape') closeLightbox();
@@ -324,6 +390,13 @@
   if (lightbox) {
     lightbox.addEventListener('click', function (e) {
       if (e.target === e.currentTarget) closeLightbox();
+    });
+  }
+
+  var lbStage = document.querySelector('.lb-stage');
+  if (lbStage) {
+    lbStage.addEventListener('click', function (e) {
+      if (e.target === lbStage) closeLightbox();
     });
   }
 
@@ -409,6 +482,110 @@
     buildDots();
     render();
     window.addEventListener('resize', recalc);
+  })();
+
+  /* ── Primary navigation: mobile toggle + scroll-spy ─────────────────────── */
+  (function primaryNav() {
+    var navEl = document.querySelector('.site-nav');
+    var toggle = document.getElementById('nav-toggle');
+    var menu = document.getElementById('primary-nav');
+    var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link[data-nav-target]'));
+    if (!navEl) return;
+
+    var mobileMq = window.matchMedia('(max-width: 880px)');
+
+    function closeMenu() {
+      if (!toggle || !menu) return;
+      toggle.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      menu.classList.remove('is-open');
+      document.body.classList.remove('nav-open');
+    }
+
+    function openMenu() {
+      if (!toggle || !menu) return;
+      toggle.classList.add('is-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      menu.classList.add('is-open');
+      document.body.classList.add('nav-open');
+    }
+
+    if (toggle && menu) {
+      toggle.addEventListener('click', function () {
+        if (menu.classList.contains('is-open')) closeMenu();
+        else openMenu();
+      });
+
+      menu.addEventListener('click', function (e) {
+        var link = e.target.closest('a');
+        if (link && menu.classList.contains('is-open')) closeMenu();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+          closeMenu();
+          toggle.focus();
+        }
+      });
+
+      function handleMqChange() {
+        if (!mobileMq.matches) closeMenu();
+      }
+      if (typeof mobileMq.addEventListener === 'function') {
+        mobileMq.addEventListener('change', handleMqChange);
+      } else if (typeof mobileMq.addListener === 'function') {
+        mobileMq.addListener(handleMqChange);
+      }
+    }
+
+    /* Scroll-spy: highlight the link whose section is closest to top of viewport */
+    if (navLinks.length && 'IntersectionObserver' in window) {
+      var sections = navLinks
+        .map(function (link) {
+          var id = link.getAttribute('data-nav-target');
+          var section = id ? document.getElementById(id) : null;
+          return section ? { id: id, el: section, link: link } : null;
+        })
+        .filter(Boolean);
+
+      var visibleIds = {};
+
+      function updateActive() {
+        var bestId = null;
+        var bestRatio = 0;
+        sections.forEach(function (s) {
+          var ratio = visibleIds[s.id] || 0;
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestId = s.id;
+          }
+        });
+        navLinks.forEach(function (link) {
+          var id = link.getAttribute('data-nav-target');
+          link.classList.toggle('is-active', id === bestId);
+        });
+      }
+
+      var spy = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            var id = entry.target.id;
+            if (entry.isIntersecting) visibleIds[id] = entry.intersectionRatio;
+            else visibleIds[id] = 0;
+          });
+          updateActive();
+        },
+        {
+          root: null,
+          rootMargin: '-40% 0px -50% 0px',
+          threshold: [0, 0.01, 0.1, 0.25, 0.5, 0.75, 1],
+        }
+      );
+
+      sections.forEach(function (s) {
+        spy.observe(s.el);
+      });
+    }
   })();
 
   /* ── Scroll reveals, parallax, nav, hero tilt ──────────────────────────── */
@@ -546,16 +723,42 @@
 
   /* ── Calendly popup (official widget modal) ─────────────────────────────── */
   var CALENDLY_BOOKING_URL =
-    'https://calendly.com/dreamwaymedia/1-and-1-with-vrej-to-discuss-the-project-details';
+    'https://calendly.com/dreamwaymedia/free-30-minute-fit-check-no-obligation-call';
+
+  function gaEvent(eventName, params) {
+    try {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', eventName, params || {});
+      }
+    } catch (err) {
+      /* ignore */
+    }
+  }
+
+  function calendlyPlacement(anchor) {
+    if (!anchor || typeof anchor.closest !== 'function') return 'other';
+    if (anchor.closest('#hero')) return 'hero';
+    if (anchor.closest('#offer')) return 'offer';
+    if (anchor.closest('#cta')) return 'cta';
+    if (anchor.closest('.site-nav')) return 'nav';
+    return 'other';
+  }
 
   document.querySelectorAll('.js-calendly').forEach(function (el) {
     el.addEventListener('click', function (e) {
+      gaEvent('calendly_book_click', { cta_placement: calendlyPlacement(el) });
       e.preventDefault();
       if (window.Calendly && typeof Calendly.initPopupWidget === 'function') {
         Calendly.initPopupWidget({ url: CALENDLY_BOOKING_URL });
       } else {
         window.location.href = CALENDLY_BOOKING_URL;
       }
+    });
+  });
+
+  document.querySelectorAll('a.hero-secondary-cta').forEach(function (el) {
+    el.addEventListener('click', function () {
+      gaEvent('hero_view_work_click', { link_url: el.getAttribute('href') || '#work' });
     });
   });
 })();

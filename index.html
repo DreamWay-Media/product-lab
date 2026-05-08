@@ -31,9 +31,34 @@
 </script>
 </head>
 <body>
-  <nav>
+  <nav class="site-nav">
     <a href="#hero" class="nav-logo">DreamWay <span>Product Lab</span></a>
-    <a href="https://calendly.com/dreamwaymedia/1-and-1-with-vrej-to-discuss-the-project-details" class="nav-cta js-calendly">Book a Call</a>
+    <button
+      type="button"
+      class="nav-toggle"
+      id="nav-toggle"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+    >
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+    <div class="nav-menu" id="primary-nav">
+      <ul class="nav-links" role="list">
+        <li><a href="#positioning" class="nav-link" data-nav-target="positioning">Approach</a></li>
+        <li><a href="#process" class="nav-link" data-nav-target="process">Process</a></li>
+        <li><a href="#work" class="nav-link" data-nav-target="work">Work</a></li>
+        <li><a href="#testimonials" class="nav-link" data-nav-target="testimonials">Reviews</a></li>
+        <li><a href="#founder" class="nav-link" data-nav-target="founder">About</a></li>
+      </ul>
+      <a
+        href="https://calendly.com/dreamwaymedia/free-30-minute-fit-check-no-obligation-call"
+        class="nav-cta js-calendly"
+        >Book a Call</a
+      >
+    </div>
   </nav>
 
   <section id="hero" class="hero-section">
@@ -50,37 +75,71 @@
       </div>
     </div>
 
-    <div class="hero-grid">
-      <div class="hero-left" data-reveal-group>
-        <div class="hero-eyebrow reveal-item" style="--i:0">Physical Product Studio</div>
-        <h1 class="hero-h1 reveal-item" style="--i:1">
-          We Build<br />
-          <em>Real</em>
-          Products.
-        </h1>
-        <p class="hero-sub reveal-item" style="--i:2">
-          From concept to manufacturing — <strong>DreamWay Product Lab</strong> executes the full product development journey for founders and brands who are ready to build something tangible.
-        </p>
-        <div class="reveal-item" style="--i:3">
-          <a href="https://calendly.com/dreamwaymedia/1-and-1-with-vrej-to-discuss-the-project-details" class="btn-primary js-calendly">Book a Strategy Call →</a>
+    <div class="hero-main">
+      <div class="hero-grid">
+        <div class="hero-left" data-reveal-group>
+          <div class="hero-eyebrow reveal-item" style="--i:0">Physical Product Studio</div>
+          <h1 class="hero-h1 reveal-item" style="--i:1">
+            We Build<br />
+            <em>Real</em>
+            Products.
+          </h1>
+          <p class="hero-sub reveal-item" style="--i:2">
+            <strong>Hands-on execution</strong> for founders and brands shipping <strong>consumer products</strong> — CPG, food &amp; beverage, supplements, and specialty goods — from concept and packaging through sourcing to <strong>manufacturing-ready delivery</strong>.
+          </p>
+          <div class="hero-actions reveal-item" style="--i:3">
+            <div class="hero-actions-row">
+              <a href="https://calendly.com/dreamwaymedia/free-30-minute-fit-check-no-obligation-call" class="btn-primary js-calendly">Book a Strategy Call →</a>
+              <a href="#work" class="hero-secondary-cta">See executed work</a>
+            </div>
+            <p class="hero-cta-note">Free 30-minute call · Fit check · No obligation</p>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-visual-label">Featured work</div>
+          <figure class="hero-product">
+            <div class="hero-product-frame">
+              <img
+                src="images/trail-chews/slide-1-24-variety-pack.jpg"
+                alt="Trail Chews consumer product packaging — example of launch-ready CPG work"
+                width="2000"
+                height="2000"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </div>
+            <figcaption class="hero-product-caption">Trail Chews · Flagship Product Sprint</figcaption>
+          </figure>
         </div>
       </div>
-      <div class="hero-right" data-parallax="0.055" data-parallax-max="14">
-        <div class="hero-stat">
-          <div class="hero-stat-num">6–10</div>
-          <div class="hero-stat-label">Week Sprint to Launch-Ready</div>
+      <div class="hero-panel" data-reveal="fade">
+        <div class="hero-metrics" aria-label="Studio benchmarks">
+          <div class="hero-metric">
+            <span class="hero-metric-val">4–6</span>
+            <span class="hero-metric-lbl">Weeks to launch</span>
+          </div>
+          <div class="hero-metric">
+            <span class="hero-metric-val">100%</span>
+            <span class="hero-metric-lbl">Success rate</span>
+          </div>
+          <div class="hero-metric">
+            <span class="hero-metric-val">Full</span>
+            <span class="hero-metric-lbl">Concept to Shelves</span>
+          </div>
+          <div class="hero-metric">
+            <span class="hero-metric-val">1:1</span>
+            <span class="hero-metric-lbl">Founder-led</span>
+          </div>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num">20+</div>
-          <div class="hero-stat-label">Consumer Products Executed</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num">End</div>
-          <div class="hero-stat-label">to-End Product Execution</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num">0</div>
-          <div class="hero-stat-label">Fluff. Just Execution.</div>
+        <div class="hero-trust" role="group" aria-label="Categories served">
+          <span>CPG</span>
+          <span class="hero-trust-sep" aria-hidden="true">·</span>
+          <span>Food &amp; Beverage</span>
+          <span class="hero-trust-sep" aria-hidden="true">·</span>
+          <span>Supplements</span>
+          <span class="hero-trust-sep" aria-hidden="true">·</span>
+          <span>Consumer Goods</span>
         </div>
       </div>
     </div>
@@ -161,7 +220,7 @@
           <h2 class="section-h2" style="color:var(--white);">The Product<br /><span>Sprint.</span></h2>
         </div>
         <div class="process-timeline">
-          <strong>6–10</strong>
+          <strong>4–6</strong>
           Weeks from kickoff<br />to launch-ready
         </div>
       </div>
@@ -230,36 +289,37 @@
           <div class="gallery-grid" data-open-gallery="trail-chews" style="cursor:pointer;">
             <div class="gallery-thumb">
               <img
-                src="images/trail-chews/trail-chews-01.JPG"
-                alt="Trail Chews packaging"
+                src="images/trail-chews/slide-1-24-variety-pack.jpg"
+                alt="Trail Chews 24-count variety pack"
                 loading="lazy"
                 decoding="async"
               />
             </div>
             <div class="gallery-thumb">
               <img
-                src="images/trail-chews/trail-chews-02.JPG"
-                alt="Trail Chews product"
+                src="images/trail-chews/slide-2-orange.jpg"
+                alt="Trail Chews orange flavor"
                 loading="lazy"
                 decoding="async"
               />
             </div>
             <div class="gallery-thumb">
               <img
-                src="images/trail-chews/trail-chews-03.JPG"
-                alt="Trail Chews detail"
+                src="images/trail-chews/slide-3-strawberry.jpg"
+                alt="Trail Chews strawberry flavor"
                 loading="lazy"
                 decoding="async"
               />
             </div>
-            <div class="gallery-thumb" style="position:relative;">
+            <div class="gallery-thumb">
               <img
-                src="images/trail-chews/trail-chews-01.JPG"
-                alt="Trail Chews — more in gallery"
+                src="images/trail-chews/trail-chews-strawberry.jpg"
+                alt="Trail Chews strawberry product presentation"
                 loading="lazy"
                 decoding="async"
               />
-              
+              <span class="gallery-more-overlay" aria-hidden="true">+3</span>
+              <span class="visually-hidden">Three more photos in this gallery</span>
             </div>
           </div>
         </div>
@@ -290,13 +350,15 @@
                 decoding="async"
               />
             </div>
-            <div class="gallery-thumb" style="position:relative;">
+            <div class="gallery-thumb">
               <img
                 src="images/food/Golden-Harvest-organic-sunflower-oil.jpg"
                 alt="Golden Harvest organic sunflower oil"
                 loading="lazy"
                 decoding="async"
               />
+              <span class="gallery-more-overlay" aria-hidden="true">+2</span>
+              <span class="visually-hidden">Two more photos in this gallery</span>
             </div>
           </div>
           <div class="work-cat-label">CPG / Food &amp; Beverage</div>
@@ -400,66 +462,80 @@
       <div class="carousel-track-wrap">
         <div class="carousel-track" id="tc-track">
           <div class="testimonial">
-            <p class="testimonial-quote">"We had the idea but zero experience in manufacturing. DreamWay took us from a concept on paper to a fully packaged, production-ready product in under eight weeks. The execution was exactly what we needed."</p>
+            <p class="testimonial-quote">"We showed up with a rough SKU idea and a spreadsheet of worries. DreamWay Product Lab turned it into packaging, specs, and a factory-ready brief faster than our investors expected. No theater — just execution."</p>
             <div class="testimonial-author">
               <div class="testimonial-avatar">
-                <div class="avatar-placeholder">
-                  <div class="avatar-placeholder-icon">⊕</div>
-                  <div class="avatar-placeholder-label">Photo</div>
-                </div>
+                <img src="images/testimonials/avatar-jordan-ellis.png" alt="" width="112" height="112" loading="lazy" decoding="async" />
               </div>
               <div>
-                <div class="testimonial-name">J. Mitchell</div>
-                <div class="testimonial-role">Founder &amp; CEO</div>
-                <div class="testimonial-product">↳ Trail Chews</div>
+                <div class="testimonial-name">Jordan Ellis</div>
+                <div class="testimonial-role">Founder, Birchlane Beverage Co.</div>
+                <div class="testimonial-product">↳ Functional sparkling line</div>
               </div>
             </div>
           </div>
           <div class="testimonial">
-            <p class="testimonial-quote">"I was skeptical about outsourcing product development. But this wasn't outsourcing — it was a true operator partnership. Every deadline was hit. The packaging came out better than I imagined."</p>
+            <p class="testimonial-quote">"I'd been burned by agencies that 'strategize' forever. This was different: weekly momentum, clear decisions, and someone answering the phone who actually runs production conversations."</p>
             <div class="testimonial-author">
               <div class="testimonial-avatar">
-                <div class="avatar-placeholder">
-                  <div class="avatar-placeholder-icon">⊕</div>
-                  <div class="avatar-placeholder-label">Photo</div>
-                </div>
+                <img src="images/testimonials/avatar-morgan-reyes.png" alt="" width="112" height="112" loading="lazy" decoding="async" />
               </div>
               <div>
-                <div class="testimonial-name">S. Reyes</div>
-                <div class="testimonial-role">Brand Owner</div>
-                <div class="testimonial-product">↳ Specialty Food Line</div>
+                <div class="testimonial-name">Morgan Reyes</div>
+                <div class="testimonial-role">Owner, Solstice Snacks</div>
+                <div class="testimonial-product">↳ Better-for-you snacks</div>
               </div>
             </div>
           </div>
           <div class="testimonial">
-            <p class="testimonial-quote">"No fluff, no wasted meetings. Vrej comes in, understands what needs to get done, and delivers. If you're serious about launching a physical product, this is the team you want."</p>
+            <p class="testimonial-quote">"Suppliers stopped ghosting us once the dossier looked legitimate. The sprint made our powder formulation and stick-pack program look serious before we committed to tooling spend."</p>
             <div class="testimonial-author">
               <div class="testimonial-avatar">
-                <div class="avatar-placeholder">
-                  <div class="avatar-placeholder-icon">⊕</div>
-                  <div class="avatar-placeholder-label">Photo</div>
-                </div>
+                <img src="images/testimonials/avatar-casey-nguyen.png" alt="" width="112" height="112" loading="lazy" decoding="async" />
               </div>
               <div>
-                <div class="testimonial-name">D. Karim</div>
-                <div class="testimonial-role">Co-Founder</div>
-                <div class="testimonial-product">↳ Consumer Goods Launch</div>
+                <div class="testimonial-name">Casey Nguyen</div>
+                <div class="testimonial-role">Co-Founder, Northwind Labs</div>
+                <div class="testimonial-product">↳ Electrolyte powder sticks</div>
               </div>
             </div>
           </div>
           <div class="testimonial">
-            <p class="testimonial-quote">"From the very first call it was clear DreamWay operates differently. They think like product people, not consultants. Our launch timeline stayed on track and the final product exceeded expectations."</p>
+            <p class="testimonial-quote">"They speak manufacturer and brand at the same time. Our shelf date moved up because rework dropped — not because we hustled harder, but because the handoffs finally made sense."</p>
             <div class="testimonial-author">
               <div class="testimonial-avatar">
-                <div class="avatar-placeholder">
-                  <div class="avatar-placeholder-icon">⊕</div>
-                  <div class="avatar-placeholder-label">Photo</div>
-                </div>
+                <img src="images/testimonials/avatar-avery-brooks.png" alt="" width="112" height="112" loading="lazy" decoding="async" />
               </div>
               <div>
-                <div class="testimonial-name">A. Norris</div>
-                <div class="testimonial-role">Brand Director</div>
-                <div class="testimonial-product">↳ Beverage Line</div>
+                <div class="testimonial-name">Avery Brooks</div>
+                <div class="testimonial-role">Director of Product, Meridian Organics</div>
+                <div class="testimonial-product">↳ Organic pantry staples</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <p class="testimonial-quote">"We needed packaging that looked premium but could clear export labeling without a fourth redesign. The Product Sprint tightened claims, artwork, and QC notes so our co-packer stopped kicking specs back."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="images/testimonials/avatar-sam-rivera.png" alt="" width="112" height="112" loading="lazy" decoding="async" />
+              </div>
+              <div>
+                <div class="testimonial-name">Sam Rivera</div>
+                <div class="testimonial-role">Founder, Copper Kettle Foods</div>
+                <div class="testimonial-product">↳ Specialty preserves</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <p class="testimonial-quote">"I'm picky about vendors. DreamWay Product Lab behaved like an operator on our line review calls — samples, tolerances, MOQs — not like a deck factory. That's why we finally signed with a factory we trust."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="images/testimonials/avatar-priya-shah.png" alt="" width="112" height="112" loading="lazy" decoding="async" />
+              </div>
+              <div>
+                <div class="testimonial-name">Priya Shah</div>
+                <div class="testimonial-role">CEO, Vantage Formulations</div>
+                <div class="testimonial-product">↳ Topical wellness SKU</div>
               </div>
             </div>
           </div>
@@ -474,9 +550,8 @@
       <div class="offer-left">
         <div class="section-label" style="color:rgba(0,0,0,0.5);">The Offer</div>
         <h2 class="offer-h2">Product<br />Sprint.</h2>
-        <div class="offer-price">Starting at $10,000</div>
-        <div class="offer-note">Fixed-scope. 6–10 week engagement.</div>
-        <a href="https://calendly.com/dreamwaymedia/1-and-1-with-vrej-to-discuss-the-project-details" class="btn-dark js-calendly">Book a Strategy Call →</a>
+        <a href="https://calendly.com/dreamwaymedia/free-30-minute-fit-check-no-obligation-call" class="btn-dark js-calendly">Book a Strategy Call →</a>
+        <p class="cta-note">Free 30-minute call · Fit check · No obligation</p>
       </div>
       <div class="offer-right">
         <ul class="deliverable-list">
@@ -529,7 +604,7 @@
           </div>
           <div class="cred-item">
             <div class="cred-icon"></div>
-            <div class="cred-text"><strong>20+ products executed</strong> across CPG, food, beverage, and consumer goods.</div>
+            <div class="cred-text"><strong>100% success rate</strong> across CPG, food, beverage, and consumer goods.</div>
           </div>
           <div class="cred-item">
             <div class="cred-icon"></div>
@@ -552,14 +627,121 @@
       <p class="cta-sub">
         Book a free 30-minute strategy call. We'll review your idea, tell you if it's a fit, and outline exactly what a Product Sprint would look like for your specific product.
       </p>
-      <a href="https://calendly.com/dreamwaymedia/1-and-1-with-vrej-to-discuss-the-project-details" class="btn-primary js-calendly" style="font-size:14px; padding:20px 40px;">Book a Strategy Call →</a>
+      <a href="https://calendly.com/dreamwaymedia/free-30-minute-fit-check-no-obligation-call" class="btn-primary js-calendly" style="font-size:14px; padding:20px 40px;">Book a Strategy Call →</a>
+      <p class="cta-note">Free 30-minute call · Fit check · No obligation</p>
     </div>
   </section>
 
-  <footer data-reveal="fade">
-    <div class="footer-logo">DreamWay <span>Product Lab</span></div>
-    <div class="footer-copy">© <span id="footer-year"></span> DreamWay Media Inc. All rights reserved.</div>
+  <footer>
+    <div class="footer-inner">
+      <a href="#hero" class="footer-logo">DreamWay <span>Product Lab</span></a>
+      <nav class="footer-nav" aria-label="Legal">
+        <ul class="footer-links">
+          <li>
+            <button type="button" class="footer-link footer-link--btn" data-legal-modal="privacy">
+              Privacy Policy
+            </button>
+          </li>
+          <li>
+            <button type="button" class="footer-link footer-link--btn" data-legal-modal="terms">
+              Terms &amp; Conditions
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <p class="footer-copy">
+        © <span id="footer-year"></span> DreamWay Media Inc.<span aria-hidden="true"> · </span>All rights reserved!
+      </p>
+    </div>
   </footer>
+
+  <div
+    id="legal-modal"
+    class="legal-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="legal-modal-title"
+    hidden
+  >
+    <div class="legal-modal-backdrop" data-legal-close tabindex="-1" aria-hidden="true"></div>
+    <div class="legal-modal-panel">
+      <div class="legal-modal-header">
+        <h2 id="legal-modal-title" class="legal-modal-title"></h2>
+        <button type="button" class="legal-modal-close" data-legal-close aria-label="Close">✕</button>
+      </div>
+      <div class="legal-modal-body" id="legal-modal-body"></div>
+    </div>
+  </div>
+
+  <template id="legal-content-privacy">
+    <div class="legal-prose">
+      <p><strong>Last updated:</strong> May 8, 2026</p>
+      <p>
+        DreamWay Media Inc. (“DreamWay,” “we,” “us”) operates DreamWay Product Lab. This Privacy Policy describes how we collect, use, and share information when you visit this website or contact us through it.
+      </p>
+      <h3>Information we collect</h3>
+      <p>
+        We may collect information you voluntarily provide (for example, name, email address, company name, and message content when you email us or use scheduling or contact tools linked from this site). We also receive technical data automatically, such as browser type, device type, general location derived from IP address, and pages viewed, through cookies and similar technologies where applicable.
+      </p>
+      <h3>How we use information</h3>
+      <p>
+        We use this information to respond to inquiries, operate and improve our website and services, analyze aggregate usage trends, comply with law, and protect our rights and the security of our users.
+      </p>
+      <h3>Sharing</h3>
+      <p>
+        We do not sell your personal information. We may share information with service providers who assist us (for example, hosting, analytics, or scheduling platforms), when required by law, or in connection with a business transfer subject to appropriate safeguards.
+      </p>
+      <h3>Your choices</h3>
+      <p>
+        Where applicable, you may request access, correction, or deletion of your personal information, or object to certain processing, by contacting us at the address below. You can also adjust cookie settings in your browser; note that some features may not work if cookies are disabled.
+      </p>
+      <h3>Security &amp; retention</h3>
+      <p>
+        We use reasonable measures to protect information we hold. We retain information only as long as needed for the purposes described above or as required by law.
+      </p>
+      <h3>Contact</h3>
+      <p>
+        For questions about this policy, contact DreamWay Media Inc. through the contact channels provided on this website.
+      </p>
+    </div>
+  </template>
+
+  <template id="legal-content-terms">
+    <div class="legal-prose">
+      <p><strong>Last updated:</strong> May 8, 2026</p>
+      <p>
+        By accessing or using this website, you agree to these Terms &amp; Conditions. If you do not agree, please do not use the site.
+      </p>
+      <h3>Services &amp; information</h3>
+      <p>
+        This website describes DreamWay Product Lab’s services in general terms. It does not constitute an offer to provide services until we have agreed to a separate written or electronic engagement. Case studies, timelines, and outcomes described on the site are illustrative and may not apply to every project.
+      </p>
+      <h3>Intellectual property</h3>
+      <p>
+        All content on this site (including text, graphics, logos, and layout) is owned by DreamWay Media Inc. or its licensors and is protected by applicable intellectual property laws. You may not copy, modify, or distribute site content without our prior written consent, except for temporary copies made in the normal course of browsing.
+      </p>
+      <h3>Third-party links</h3>
+      <p>
+        This site may link to third-party tools or websites (for example, scheduling). Those services have their own terms and privacy policies; we are not responsible for their practices.
+      </p>
+      <h3>Disclaimer</h3>
+      <p>
+        The site and its content are provided “as is” without warranties of any kind, to the fullest extent permitted by law. We are not liable for any indirect, incidental, or consequential damages arising from your use of the site.
+      </p>
+      <h3>Governing law</h3>
+      <p>
+        These terms are governed by the laws applicable to DreamWay Media Inc.’s place of incorporation, without regard to conflict-of-law rules, except where prohibited by law.
+      </p>
+      <h3>Changes</h3>
+      <p>
+        We may update these terms from time to time. The “Last updated” date above will change when we do. Continued use of the site after changes constitutes acceptance of the revised terms.
+      </p>
+      <h3>Contact</h3>
+      <p>
+        For questions about these terms, contact DreamWay Media Inc. through the contact channels provided on this website.
+      </p>
+    </div>
+  </template>
 
   <script src="js/site.js" defer></script>
 </body>
