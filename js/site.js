@@ -52,8 +52,16 @@
           caption: 'Indianos — Tequila gift set presentation',
         },
         {
+          src: 'images/food/margarita-mix.jpg',
+          caption: 'Margarita mix — Packaging',
+        },
+        {
           src: 'images/food/belizimo-peppers.jpg',
           caption: 'Belizimo — Peppers',
+        },
+        {
+          src: 'images/food/ani-preserves.jpg',
+          caption: 'Ani Preserves — Packaging',
         },
         {
           src: 'images/food/Golden-Harvest-organic-sunflower-oil.jpg',
@@ -62,6 +70,10 @@
         {
           src: 'images/food/Whole-green-olives-in-brine-jar.jpg',
           caption: 'Whole green olives in brine — Jar',
+        },
+        {
+          src: 'images/food/peas-n-tomato.jpg',
+          caption: 'Peas & tomato — Packaging',
         },
         {
           src: 'images/food/Wafer-rolls-with-hazelnut-and-cocoa.jpg',
